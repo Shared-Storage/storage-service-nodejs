@@ -1,35 +1,62 @@
 const logger = require("./../../../util/logger");
-// const Product = require("./../model/product");
+const Location = require("./../model/location");
 
-exports.create = (req, res, next) => {
-  res.status(200).send({ working: "create" });
+exports.create = async (req, res) => {
+  // Validating incoming data
+  const organizationId = req.body.organizationId;
+  const name = req.body.name;
+  const description = req.body.description;
+  const imageUrl = req.body.imageUrl;
+
+  const finalObj = { organizationId, name, description, imageUrl };
+  try {
+    const locationObject = new Location({ ...finalObj });
+    const response = await locationObject.save();
+    res.status(201).send({ object: response });
+  } catch (err) {
+    logger.error(err);
+    res.status(500).send({ error: true, errorMessage: err.message });
+  }
 };
 
-exports.getAll = (req, res, next) => {
-  res.status(200).send({ working: "getAll" });
+exports.getAll = async (_req, res) => {
+  try {
+    const response = await Location.find();
+    res.status(200).send({ locations: response });
+  } catch (err) {
+    logger.error(err);
+    res.status(500).send({ error: true, errorMessage: err.message });
+  }
 };
 
-exports.getByOrganizationId = (req, res, next) => {
-  res
-    .status(200)
-    .send({
-      working: "getByOrganizationId",
-      parameter: req.params.organizationId,
+exports.getByOrganizationId = async (req, res) => {
+  try {
+    const response = await Location.find().where({
+      organizationId: req.params.organizationId,
     });
+    res.status(200).send({ locations: response });
+  } catch (err) {
+    logger.error(err);
+    res.status(500).send({ error: true, errorMessage: err.message });
+  }
 };
 
-exports.getByLocationId = (req, res, next) => {
-  res
-    .status(200)
-    .send({ working: "getByLocationId", parameter: req.params.locationId });
+exports.getByLocationId = async (req, res) => {
+  try {
+    const response = await Location.findById(req.params.locationId);
+    res.status(200).send({ location: response });
+  } catch (err) {
+    logger.error(err);
+    res.status(500).send({ error: true, errorMessage: err.message });
+  }
 };
 
-exports.getByLocationId = (req, res, next) => {
-  res
-    .status(200)
-    .send({ working: "getByLocationId", parameter: req.params.locationId });
-};
-
-exports.delete = (req, res, next) => {
-  res.status(200).send({ working: "delete", parameter: req.params.locationId });
+exports.delete = async (req, res) => {
+  try {
+    const response = await Location.deleteOne({ _id: req.params.locationId });
+    res.status(200).send({ deleted: response.acknowledged });
+  } catch (err) {
+    logger.error(err);
+    res.status(500).send({ error: true, errorMessage: err.message });
+  }
 };
