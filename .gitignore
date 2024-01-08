@@ -1,0 +1,6 @@
+node_modules
+
+.env
+.env.local.*
+
+api/v0

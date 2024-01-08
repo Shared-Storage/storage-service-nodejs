@@ -1,0 +1,26 @@
+{
+  "name": "storage_service",
+  "version": "1.0.0",
+  "description": "Storage service.",
+  "main": "app.js",
+  "scripts": {
+    "start": "eval $(cat .env.local.production) node app",
+    "staging": "eval $(cat .env.local.staging) node app",
+    "dev": "eval $(cat .env.local.dev) nodemon app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Storage",
+    "service"
+  ],
+  "author": "Rishab Bahal",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
