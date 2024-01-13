@@ -4,7 +4,7 @@ const Item = require("./../model/item");
 exports.create = async (req, res) => {
   // Validating incoming data
   const organizationId = req.body.organizationId;
-  const locationId = req.body.locationId;
+  const location = req.body.locationId;
   const name = req.body.name;
   const imageUrl = req.body.imageUrl;
   const description = req.body.description;
@@ -12,7 +12,7 @@ exports.create = async (req, res) => {
 
   const finalObject = {
     organizationId,
-    locationId,
+    location,
     name,
     imageUrl,
     description,
@@ -31,7 +31,7 @@ exports.create = async (req, res) => {
 
 exports.getAll = async (_req, res) => {
   try {
-    const response = await Item.find();
+    const response = await Item.find().populate("location");
     res.status(200).send({ items: response });
   } catch (err) {
     logger.error(err);
@@ -42,7 +42,7 @@ exports.getAll = async (_req, res) => {
 exports.getByOrganizationId = async (req, res) => {
   const organizationId = req.params.organizationId;
   try {
-    const response = await Item.find({ organizationId });
+    const response = await Item.find({ organizationId }).populate("location");
     res.status(200).send({
       items: response,
     });
@@ -54,7 +54,7 @@ exports.getByOrganizationId = async (req, res) => {
 
 exports.getByItemId = async (req, res) => {
   try {
-    const response = await Item.findById(req.params.itemId);
+    const response = await Item.findById(req.params.itemId).populate("location");
     res.status(200).send({
       items: response,
     });
@@ -67,12 +67,11 @@ exports.getByItemId = async (req, res) => {
 exports.update = async (req, res) => {
   const itemId = req.params.itemId;
   const data = req.body;
-  try{
+  try {
     const response = await Item.findOneAndUpdate({ _id: itemId }, { ...data });
     res.status(200).send({ object: response });
-  }
-  catch(err) {
-    logger.error(err)
+  } catch (err) {
+    logger.error(err);
     res.status(500).send({ error: true, errorMessage: err.message });
   }
 };
