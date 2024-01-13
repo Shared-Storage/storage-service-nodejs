@@ -11,9 +11,11 @@ const locationSchema = new mongoose.Schema({
   },
   imageUrl: {
     type: String,
+    default: null
   },
   description: {
     type: String,
+    default: null,
   },
 });
 

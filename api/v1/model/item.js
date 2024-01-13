@@ -5,8 +5,9 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  locationId: {
-    type: String,
+  location: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Location",
     required: true,
   },
   name: {
@@ -21,8 +22,8 @@ const itemSchema = new mongoose.Schema({
   },
   tags: {
     type: [String],
-    default: []
-  }
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("Item", itemSchema);
