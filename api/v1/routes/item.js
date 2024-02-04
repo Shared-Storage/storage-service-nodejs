@@ -9,6 +9,8 @@ router.post("/", controller.create);
 router.get("/", controller.getAll);
 // Get items by organization
 router.get("/org/:organizationId", controller.getByOrganizationId);
+// Get items by organization by location
+router.get("/org-loc/:organizationId/:locationId", controller.getByOrganizationIdByLocationId);
 // Get item by item id
 router.get("/item-id/:itemId", controller.getByItemId);
 // Update item by item id
