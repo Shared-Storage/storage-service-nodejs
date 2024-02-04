@@ -52,9 +52,25 @@ exports.getByOrganizationId = async (req, res) => {
   }
 };
 
+exports.getByOrganizationIdByLocationId = async (req, res) => {
+  const organizationId = req.params.organizationId;
+  const location = req.params.locationId;
+  try {
+    const response = await Item.find({ organizationId, location }).populate("location");
+    res.status(200).send({
+      items: response,
+    });
+  } catch (err) {
+    logger.error(err);
+    res.status(500).send({ error: true, errorMessage: err.message });
+  }
+};
+
 exports.getByItemId = async (req, res) => {
   try {
-    const response = await Item.findById(req.params.itemId).populate("location");
+    const response = await Item.findById(req.params.itemId).populate(
+      "location"
+    );
     res.status(200).send({
       items: response,
     });
