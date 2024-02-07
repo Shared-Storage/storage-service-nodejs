@@ -56,13 +56,51 @@ exports.getByOrganizationIdByLocationId = async (req, res) => {
   const organizationId = req.params.organizationId;
   const location = req.params.locationId;
   try {
-    const response = await Item.find({ organizationId, location }).populate("location");
+    const response = await Item.find({ organizationId, location }).populate(
+      "location"
+    );
     res.status(200).send({
       items: response,
     });
   } catch (err) {
     logger.error(err);
     res.status(500).send({ error: true, errorMessage: err.message });
+  }
+};
+
+exports.getByOrganizationIdBySearchText = async (req, res) => {
+  const organizationId = req.params.organizationId;
+  const searchText = req.params.searchText;
+  try {
+    const response = await Item.find({
+      organizationId,
+      $text: { $search: searchText },
+    }).populate("location");
+    res.status(200).send({
+      items: response,
+    });
+  } catch (error) {
+    logger.error(error);
+    res.status(500).send({ error: true, errorMessage: error.message });
+  }
+};
+
+exports.getByOrganizationIdByLocationIdBySearchText = async (req, res) => {
+  const organizationId = req.params.organizationId;
+  const location = req.params.locationId;
+  const searchText = req.params.searchText;
+  try {
+    const response = await Item.find({
+      organizationId,
+      location,
+      $text: { $search: searchText },
+    }).populate("location");
+    res.status(200).send({
+      items: response,
+    });
+  } catch (error) {
+    logger.error(error);
+    res.status(500).send({ error: true, errorMessage: error.message });
   }
 };
 
