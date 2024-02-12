@@ -60,3 +60,12 @@ exports.delete = async (req, res) => {
     res.status(500).send({ error: true, errorMessage: err.message });
   }
 };
+
+exports.imageUpload = (req, res, next) => {
+  const data = {
+    filename: req.file.key,
+    fileLocation: req.file.location,
+    originalname: req.file.originalname,
+  };
+  res.status(200).json({ success: true, data: data });
+};
