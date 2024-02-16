@@ -61,7 +61,7 @@ exports.delete = async (req, res) => {
   }
 };
 
-exports.imageUpload = (req, res, next) => {
+exports.imageUpload = (req, res) => {
   const data = {
     filename: req.file.key,
     fileLocation: req.file.location,
