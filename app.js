@@ -6,7 +6,6 @@ const logger = require("./util/logger");
 const v0Routes = require("./api/v0/index");
 const v1Routes = require("./api/v1/index");
 
-const SERVER_PORT = process.env.SERVER_PORT;
 const MONGODB_URL = process.env.MONGODB_URL;
 const app = express();
 
@@ -30,13 +29,5 @@ app.use((req, _res, next) => {
 });
 app.use("/v0", v0Routes.router);
 app.use("/v1", v1Routes.router);
-mongoose
-  .connect(MONGODB_URL)
-  .then(() => {
-    app.listen(process.env.SERVER_PORT, (err) => {
-      if (!err) console.log(`Listening to port ${SERVER_PORT}...`);
-    });
-  })
-  .catch((err) => {
-    logger.error(err);
-  });
+mongoose.connect(MONGODB_URL, { useNewUrlParser: true });
+module.exports = app;
