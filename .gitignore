@@ -1,6 +1,9 @@
 node_modules
 
 .env
+.env.*
 .env.local.*
+
+.serverless
 
 api/v0
