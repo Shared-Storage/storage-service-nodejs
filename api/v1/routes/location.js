@@ -14,6 +14,7 @@ const isAuth = require("../controller/isAuth");
 
 const fileStorage = multerS3({
   s3: s3,
+  contentType: multerS3.AUTO_CONTENT_TYPE,
   bucket: process.env.MULTER_S3_BUCKET,
   // acl: "public-read", // not using it anymore because giving access to S3 by vrating user and assigning user to group with policy.
   key: function (_req, file, cb) {
