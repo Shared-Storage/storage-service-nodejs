@@ -35,3 +35,16 @@ To generate keys you can refer here https://www.youtube.com/watch?v=D5_FHbdsjRc
 
 ## To test if app is up in development or deployment
 In browser run the following: `http://<server_link>/v0/working`
+
+## Docker
+### .env.docker
+```
+ENV=local.docker
+ENABLE_DEBUG=true
+SERVER_PORT=3002
+MONGODB_URL=mongodb://db:27017/shared_storage-storage_service
+TOKEN_SECRET=ThisIsASecret
+CLOUD_SECRET_KEY=#####
+CLOUD_ACCESS_KEY_ID=#####
+MULTER_S3_BUCKET=sharedstorage-storage
+```

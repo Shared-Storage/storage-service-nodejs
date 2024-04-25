@@ -7,6 +7,7 @@
     "start": "eval $(cat .env.local.staging) node server",
     "dev": "eval $(cat .env.local.dev) nodemon server",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start-docker": "node server",
     "serverless-deploy-production": "eval $(cat .env.deploy.production) serverless deploy",
     "serverless-deploy-staging": "eval $(cat .env.deploy.staging) serverless deploy"
   },
